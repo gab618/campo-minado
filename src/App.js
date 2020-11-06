@@ -43,25 +43,30 @@ function App() {
       </a>
       <div className="container">
         <input
-          className="user-input"
+          className={!!username ? 'user-input' : 'invalid-input user-input'}
           type="text"
           placeholder="Seu nick da twitch aqui"
           onChange={handleChangeUsername}
           value={username}
         />
-        <div className="minesweeper__header">
-          <button className="minesweeper__restart" onClick={restartMinesweeper}>
-            🤡
-          </button>
+        <div className={username ? '' : 'disabled'}>
+          <div className="minesweeper__header">
+            <button
+              className="minesweeper__restart"
+              onClick={restartMinesweeper}
+            >
+              🤡
+            </button>
+          </div>
+          <Minesweeper
+            key={minesweeperKey}
+            onWin={submitPoints}
+            onLose={() => alert('Você perdeu!')}
+            bombChance={0.15} // 15% chance that a field will contain a bomb
+            width={10} // amount of fields horizontally
+            height={10} // amount of fields vertically
+          />
         </div>
-        <Minesweeper
-          key={minesweeperKey}
-          onWin={submitPoints}
-          onLose={() => alert('Você perdeu!')}
-          bombChance={0.15} // 15% chance that a field will contain a bomb
-          width={10} // amount of fields horizontally
-          height={10} // amount of fields vertically
-        />
       </div>
     </>
   );
